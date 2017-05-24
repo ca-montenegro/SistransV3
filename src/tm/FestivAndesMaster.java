@@ -30,8 +30,10 @@ import vos.Espectaculo;
 import vos.InformacionVentaFuncion;
 import vos.InformacionVentaLocalidad;
 import vos.ListaBuenosClientes;
+import vos.ListaEspectaculo;
 import vos.ListaFuncioneSitio;
 import vos.ListaFuncionesCompania;
+import vos.ListaFuncionesEspectaculos;
 import vos.ListaInformacion;
 import vos.ListaInformacionFuncion;
 import vos.ListaLocalidades;
@@ -1772,6 +1774,7 @@ public class FestivAndesMaster {
 		return abonamientos;
 	}
 	
+
 	public void retirarCompania(Long idCompania) throws Exception {
 		DAOTablaCompania daocomp = new DAOTablaCompania();
 		try {
@@ -1853,5 +1856,150 @@ public class FestivAndesMaster {
 
 	}
 
+
+
+	public ListaEspectaculo consultarFuncionesEspectaculoFecha(String fechaIncial, String fechaFinal) throws SQLException
+	 {
+	 		ArrayList<ListaFuncionesEspectaculos> resp;
+	 
+	 		DAOTablaFestival daoFestival = new DAOTablaFestival();
+	 
+	 		try 
+	 		{
+	 			//////Transacci�n
+	 			this.conn = darConexion();
+	 			daoFestival.setConn(conn);
+	 			resp = daoFestival.consultaFuncioneEspectaculoFecha(fechaIncial, fechaFinal);
+	 			conn.commit();
+	 
+	 		} catch (SQLException e) {
+	 			System.err.println("SQLException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} catch (Exception e) {
+	 			System.err.println("GeneralException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} finally {
+	 			try {
+	 				daoFestival.cerrarRecursos();
+	 				if(this.conn!=null)
+	 					this.conn.close();
+	 			} catch (SQLException exception) {
+	 				System.err.println("SQLException closing resources:" + exception.getMessage());
+	 				exception.printStackTrace();
+	 				throw exception;
+	 			}
+	 		}
+	 		return new ListaEspectaculo(resp);
+	 	}
+	 	
+	 	public ListaEspectaculo consultarFuncionesEspectaculoIdioma(String idioma) throws SQLException
+	 	{
+	 		ArrayList<ListaFuncionesEspectaculos> resp;
+	 
+	 		DAOTablaFestival daoFestival = new DAOTablaFestival();
+	 
+	 		try 
+	 		{
+	 			//////Transacci�n
+	 			this.conn = darConexion();
+	 			daoFestival.setConn(conn);
+	 			resp = daoFestival.consultaFuncioneEspectaculoIdioma(idioma);
+	 			conn.commit();
+	 
+	 		} catch (SQLException e) {
+	 			System.err.println("SQLException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} catch (Exception e) {
+	 			System.err.println("GeneralException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} finally {
+	 			try {
+	 				daoFestival.cerrarRecursos();
+	 				if(this.conn!=null)
+	 					this.conn.close();
+	 			} catch (SQLException exception) {
+	 				System.err.println("SQLException closing resources:" + exception.getMessage());
+	 				exception.printStackTrace();
+	 				throw exception;
+	 			}
+	 		}
+	 		return new ListaEspectaculo(resp);
+	 	}
+	 	
+	 	public ListaEspectaculo consultarFuncionesEspectaculoCategoria(String categoria) throws SQLException
+	 	{
+	 		ArrayList<ListaFuncionesEspectaculos> resp;
+	 
+	 		DAOTablaFestival daoFestival = new DAOTablaFestival();
+	 
+	 		try 
+	 		{
+	 			//////Transacci�n
+	 			this.conn = darConexion();
+	 			daoFestival.setConn(conn);
+	 			resp = daoFestival.consultaFuncioneEspectaculoCategoria(categoria);
+	 			conn.commit();
+	 
+	 		} catch (SQLException e) {
+	 			System.err.println("SQLException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} catch (Exception e) {
+	 			System.err.println("GeneralException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} finally {
+	 			try {
+	 				daoFestival.cerrarRecursos();
+	 				if(this.conn!=null)
+	 					this.conn.close();
+	 			} catch (SQLException exception) {
+	 				System.err.println("SQLException closing resources:" + exception.getMessage());
+	 				exception.printStackTrace();
+	 				throw exception;
+	 			}
+	 		}
+	 		return new ListaEspectaculo(resp);
+	 	}
+	 	
+	 	public ListaEspectaculo consultarFuncionesEspectaculoCompania(String idCompania) throws SQLException
+	 	{
+	 		ArrayList<ListaFuncionesEspectaculos> resp;
+	 
+	 		DAOTablaFestival daoFestival = new DAOTablaFestival();
+	 
+	 		try 
+	 		{
+	 			//////Transacci�n
+	 			this.conn = darConexion();
+	 			daoFestival.setConn(conn);
+	 			resp = daoFestival.consultaFuncioneEspectaculoCompania(idCompania);
+	 			conn.commit();
+	 
+	 		} catch (SQLException e) {
+	 			System.err.println("SQLException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} catch (Exception e) {
+	 			System.err.println("GeneralException:" + e.getMessage());
+	 			e.printStackTrace();
+	 			throw e;
+	 		} finally {
+	 			try {
+	 				daoFestival.cerrarRecursos();
+	 				if(this.conn!=null)
+	 					this.conn.close();
+	 			} catch (SQLException exception) {
+	 				System.err.println("SQLException closing resources:" + exception.getMessage());
+	 				exception.printStackTrace();
+	 				throw exception;
+	 			}
+	 		}
+	 		return new ListaEspectaculo(resp);
+	 	}
 
 }

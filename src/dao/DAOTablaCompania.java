@@ -142,4 +142,10 @@ public class DAOTablaCompania {
 		}
 		return usuarios;
 	}
+	
+	public ArrayList<Long> retirarCompania(Long idCompania)
+	{
+		ArrayList<Long> idsFunciones = new ArrayList<>();
+		String sql = "select id_compa, id_funcion from compania natural join(select * from funcion inner join espectaculo on funcion.id_espectaculo  = espectaculo.id_espec) where id_compa = 12;"
+	}
 }
