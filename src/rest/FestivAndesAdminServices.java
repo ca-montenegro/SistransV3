@@ -29,6 +29,7 @@ import vos.Espectaculo;
 import vos.Funcion;
 import vos.InformacionVentaLocalidad;
 import vos.ListaBuenosClientes;
+import vos.ListaEspectaculo;
 import vos.ListaFuncioneSitio;
 import vos.ListaFuncionesCompania;
 import vos.ListaInformacion;
@@ -508,6 +509,66 @@ public class FestivAndesAdminServices {
 		
 		return Response.status(200).build();
 				
+	}
+	
+	@PUT
+	@Path("/consultaFuncionesEspectaculos/fecha")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultaFuncionesEspectaculosFecha(VOAbonamiento fechas) {
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		ListaEspectaculo lista;
+		try {
+		lista = tm.consultarFuncionesEspectaculoFecha(fechas.getFechaConsulta(), fechas.getFechaFinal());
+
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(lista).build();
+	}
+	
+	@GET
+	@Path("/consultaFuncionesEspectaculos/idioma/{idioma}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultaFuncionesEspectaculoIdioma(@PathParam("idioma") String idioma) {
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		ListaEspectaculo lista;
+		try {
+		lista = tm.consultarFuncionesEspectaculoIdioma(idioma);
+
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(lista).build();
+	}
+	
+	@GET
+	@Path("/consultaFuncionesEspectaculos/compania/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultaFuncionesEspectaculoCompania(@PathParam("id") String id) {
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		ListaEspectaculo lista;
+		try {
+		lista = tm.consultarFuncionesEspectaculoCompania(id);
+
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(lista).build();
+	}
+	
+	@GET
+	@Path("/consultaFuncionesEspectaculos/categoria/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultaFuncionesEspectaculoCategoria(@PathParam("id") String id) {
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		ListaEspectaculo lista;
+		try {
+		lista = tm.consultarFuncionesEspectaculoCategoria(id);
+
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(lista).build();
 	}
 }
 
