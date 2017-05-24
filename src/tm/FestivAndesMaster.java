@@ -1771,5 +1771,87 @@ public class FestivAndesMaster {
 		abonamientos.addAll(abonamientosGlobal);
 		return abonamientos;
 	}
+	
+	public void retirarCompania(Long idCompania) throws Exception {
+		DAOTablaCompania daocomp = new DAOTablaCompania();
+		try {
+			////// Transacción local
+			this.conn = darConexion();
+			daocomp.setConn(conn);
+			daocomp.retirarCompania(idCompania);
+			
+			//transacción global
+			FestivAndesDistributed dtm =  FestivAndesDistributed.getInstance();
+			dtm.retirarCompaniaGlobal(idCompania);
+			
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daocomp.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+	}
+	
+	public List<VOFuncion> getFuncionesDistribuidas() throws Exception {
+		DAOTablaCompania daocomp = new DAOTablaCompania();
+		try {
+			////// Transacción local
+			
+			List<Funcion> funciones = getFunciones(null, null, null, null, null, null, null);
+			List<VOFuncion> ret= new ArrayList<VOFuncion>();
+			for (Iterator iterator = funciones.iterator(); iterator.hasNext();) {
+				Funcion funcion = (Funcion) iterator.next();
+				VOFuncion Vfuncion = new VOFuncion();
+				Vfuncion.setFecha(funcion.getFecha());
+				Vfuncion.setId(funcion.getId());
+				Vfuncion.setNombreEspectaculo(funcion.getEspectaculo().getNombre());
+				Vfuncion.setNombreSitio(funcion.getSitio().getNombre());
+				ret.add(Vfuncion);
+			}
+			
+			
+			//transacción global
+			FestivAndesDistributed dtm =  FestivAndesDistributed.getInstance();
+			ret.addAll(dtm.getFuncionesGlobal());
+			return ret;
+			
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daocomp.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+	}
+
 
 }
